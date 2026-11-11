@@ -22,7 +22,8 @@ function setStatus(text: string, kind: '' | 'warn' | 'err' = '') {
 
 const MIN_ZOOM_SHADE = 15;
 const PAD_M = 160; // 画面外から伸びてくる影のための余白
-const MAX_PIXELS = 3_000_000;
+const MAX_PIXELS = 2_000_000;
+let retryCount = 0;
 const [CX, CY] = toNZTM(...CENTER);
 
 // ---------- 地図 ----------
@@ -207,12 +208,12 @@ function updateRegion() {
   }
   // すでに読み込んだ範囲に収まっていれば再読み込みしない
   if (region && v[0] >= region.innerBox[0] && v[1] >= region.innerBox[1] && v[2] <= region.innerBox[2] && v[3] <= region.innerBox[3]) {
-    const wantRes = z >= 16.3 ? 1 : 2;
+    const wantRes = z >= 17 ? 1 : 2;
     if (region.res <= wantRes) return;
   }
   // 表示範囲を少し広げ、解像度を決める
   const ex = (v[2] - v[0]) * 0.15, ey = (v[3] - v[1]) * 0.15;
-  let res = z >= 16.3 ? 1 : 2;
+  let res = z >= 17 ? 1 : 2;
   let inner: BBox = [v[0] - ex, v[1] - ey, v[2] + ex, v[3] + ey];
   const px = () => ((inner[2] - inner[0] + 2 * PAD_M) * (inner[3] - inner[1] + 2 * PAD_M)) / (res * res);
   while (px() > MAX_PIXELS && res < 4) res *= 2;
@@ -234,7 +235,7 @@ function updateRegion() {
     setStatus('この範囲はLINZの1m LiDARデータがありません。影は表示していません。', 'warn');
     return;
   }
-  setStatus(`高さデータ（LINZ LiDAR ${res}m）を読み込み中…`);
+  setStatus(`高さデータ（LINZ LiDAR ${res}m）を読み込み中…${res > 1 ? '（さらに拡大すると1mの詳細表示）' : ''}`);
   worker.postMessage({ type: 'load', id, bbox, res, pad: PAD_M, buildings: collectBuildings(bbox), lots: [] });
   fetchLots(id, bbox, inner);
 }
@@ -267,13 +268,19 @@ function collectBuildings(bbox: BBox) {
 }
 
 // ---------- 駐車場（OpenStreetMap / Overpass API） ----------
+const OVERPASS = ['https://overpass-api.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter', 'https://maps.mail.ru/osm/tools/overpass/api/interpreter'];
 async function fetchLots(id: number, bbox: BBox, inner: BBox) {
   const sw = toLngLat(inner[0], inner[1]), ne = toLngLat(inner[2], inner[3]);
   const q = `[out:json][timeout:20];(way["amenity"="parking"](${sw[1]},${sw[0]},${ne[1]},${ne[0]});relation["amenity"="parking"](${sw[1]},${sw[0]},${ne[1]},${ne[0]}););out geom;`;
   try {
-    const res = await fetch('https://overpass-api.de/api/interpreter', { method: 'POST', body: 'data=' + encodeURIComponent(q) });
-    if (!res.ok) throw new Error(String(res.status));
-    const js = await res.json();
+    let js: any = null;
+    for (const ep of OVERPASS) {
+      try {
+        const res = await fetch(ep, { method: 'POST', body: 'data=' + encodeURIComponent(q) });
+        if (res.ok) { js = await res.json(); break; }
+      } catch { /* 次のサーバーへ */ }
+    }
+    if (!js) throw new Error('overpass');
     if (id !== regionSeq) return;
     const feats: GeoJSON.Feature[] = [];
     const lotsMsg: { id: string; rings: [number, number][][] }[] = [];
@@ -319,6 +326,7 @@ worker.onmessage = async (e) => {
   if (m.type === 'loaded') {
     if (!region || m.id !== region.id) return;
     region.loaded = true;
+    retryCount = 0;
     if (m.nodata >= 0.999) {
       hideShade();
       setStatus('この範囲はLiDAR測量データがありません。影は表示していません。', 'warn');
@@ -329,8 +337,15 @@ worker.onmessage = async (e) => {
     shadeBusy = false;
     if (region && m.id === region.id) {
       hideShade();
-      setStatus(`高さデータを取得できませんでした（${m.message}）。通信状態を確認してください。影は表示していません。`, 'err');
       region = null;
+      if (retryCount < 2) {
+        retryCount++;
+        setStatus(`高さデータの通信が途切れました。自動で再試行しています（${retryCount}回目）…`, 'warn');
+        setTimeout(updateRegion, 2500);
+      } else {
+        retryCount = 0;
+        setStatus(`高さデータを取得できませんでした（${m.message}）。電波の良い場所で地図を少し動かすと再試行します。影は表示していません。`, 'err');
+      }
     }
   } else if (m.type === 'shade') {
     shadeBusy = false;

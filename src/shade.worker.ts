@@ -24,6 +24,27 @@ const NODATA = -9999;
 const OBJ_MIN = 2.0; // 地面から2m以上を「障害物（建物・樹木）」とみなす（車・柵は除外）
 const CAR_H = 1.0; // 車の中ほどの高さで日陰を判定
 
+// スマホ回線で一時的に切れても大丈夫なよう、通信は自動で再試行する
+const realFetch = self.fetch.bind(self);
+(self as any).fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+  let lastErr: unknown;
+  for (let a = 0; a < 4; a++) {
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 40000);
+    try {
+      const r = await realFetch(input, { ...init, signal: ctl.signal, cache: 'no-store' });
+      clearTimeout(timer);
+      if (r.status >= 500) throw new Error('HTTP ' + r.status);
+      return r;
+    } catch (e) {
+      clearTimeout(timer);
+      lastErr = e;
+      await new Promise((res) => setTimeout(res, 700 * 2 ** a));
+    }
+  }
+  throw lastErr;
+};
+
 const tiffCache = new Map<string, Promise<GeoTIFF>>();
 function openTiff(url: string) {
   let p = tiffCache.get(url);
