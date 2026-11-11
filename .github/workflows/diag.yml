@@ -9,16 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: pip install playwright && python -m playwright install --with-deps chromium
+      - run: python diag.py || true
       - run: |
-          O="Origin: https://toshinz777-source.github.io"
-          B=https://nz-elevation.s3.ap-southeast-2.amazonaws.com/new-zealand/new-zealand
-          {
-          echo "== GET range dsm"; curl -s -D - -o /dev/null -H "$O" -H "Range: bytes=0-100" $B/dsm_1m/2193/BA31.tiff
-          echo "== OPTIONS dsm"; curl -s -D - -o /dev/null -X OPTIONS -H "$O" -H "Access-Control-Request-Method: GET" -H "Access-Control-Request-Headers: range" $B/dsm_1m/2193/BA31.tiff
-          echo "== GET range dem"; curl -s -D - -o /dev/null -H "$O" -H "Range: bytes=0-100" $B/dem_1m/2193/BA31.tiff
-          echo "== catalog"; curl -s -D - -o /dev/null -H "$O" https://nz-elevation.s3.ap-southeast-2.amazonaws.com/catalog.json
-          echo "== s3-dash style"; curl -s -D - -o /dev/null -H "$O" -H "Range: bytes=0-100" https://nz-elevation.s3-ap-southeast-2.amazonaws.com/new-zealand/new-zealand/dsm_1m/2193/BA31.tiff
-          echo "== item"; curl -s $B/dsm_1m/2193/BA31.json | head -c 1500
-          } > diag.txt 2>&1
           git config user.name bot; git config user.email bot@example.com
-          git add diag.txt; git commit -m diag; git push
+          git pull -q || true
+          git add diag2.txt; git commit -m diag2; git push
