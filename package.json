@@ -1,0 +1,29 @@
+{
+  "name": "shade",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "tsc && vite build",
+    "preview": "vite preview --host"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "geotiff": "^3.0.5",
+    "maplibre-gl": "^6.17.0",
+    "proj4": "^2.22.0",
+    "suncalc": "^2.1.4"
+  },
+  "devDependencies": {
+    "@types/geojson": "^7946.0.16",
+    "@types/proj4": "^2.5.6",
+    "@types/suncalc": "^1.9.2",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vite-plugin-pwa": "^2.0.0"
+  },
+  "type": "module"
+}

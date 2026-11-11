@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#1546e6" />
+    <meta name="description" content="Albany周辺で車を日陰に停められる場所を、日時を指定して予測するアプリ" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icon-192.png" />
+    <title>Albany 日陰ファインダー</title>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <header id="top">
+      <div class="title">🌳 Albany 日陰ファインダー</div>
+      <div id="status">地図を読み込み中…</div>
+    </header>
+
+    <button id="btnLots" class="fab" title="駐車場リスト">🅿️<span id="lotCount"></span></button>
+    <button id="btnHelp" class="fab fab2" title="説明">？</button>
+
+    <section id="panel">
+      <div class="row">
+        <input type="date" id="date" />
+        <button id="btnNow" class="chip">今</button>
+        <span id="sun" class="sun"></span>
+      </div>
+      <div class="row">
+        <button id="minus" class="step">−</button>
+        <input type="range" id="time" min="0" max="1435" step="5" />
+        <button id="plus" class="step">＋</button>
+        <b id="timeLabel">--:--</b>
+      </div>
+      <div class="legend">
+        <span><i style="background: rgba(20, 70, 230, 0.6)"></i>建物・地形の影</span>
+        <span><i style="background: rgba(70, 170, 255, 0.5)"></i>樹木の影（予測）</span>
+        <span><i style="background: rgba(0, 150, 110, 0.45)"></i>木の下（予測）</span>
+        <span><i class="hatch"></i>データなし</span>
+      </div>
+    </section>
+
+    <section id="lots" class="sheet hidden">
+      <div class="sheetHead">
+        <b>表示範囲の駐車場（日陰の多い順）</b>
+        <button class="close" data-close="lots">✕</button>
+      </div>
+      <div id="lotList"><p class="muted">ズーム15以上で駐車場を探します。</p></div>
+    </section>
+
+    <section id="help" class="sheet hidden">
+      <div class="sheetHead">
+        <b>使い方とデータについて</b>
+        <button class="close" data-close="help">✕</button>
+      </div>
+      <div class="helpBody">
+        <p><b>使い方</b>：地図を拡大（ズーム15以上）すると、表示している範囲だけ日陰を計算します。下のスライダーで時刻、日付欄で日にちを変えると影が動きます。右下の◎で現在地を表示します。🅿️で表示範囲の駐車場を日陰の多い順に並べます。</p>
+        <p><b>計算方法</b>：LINZ（Toitū Te Whenua）が公開している航空LiDAR測量の1m DSM（建物・樹木を含む高さ）と1m DEM（地面の高さ）を使い、SunCalcで求めた太陽の方向へ各地点から光線を伸ばして、さえぎる物があるかを調べています。車の高さ約1mの位置で判定しています。</p>
+        <p><b>「予測」の部分</b>：樹木の枝葉のすき間や季節による葉の量は測れないため、樹木の影と木の下は「予測」として薄い色で表示しています。実際は木漏れ日がある場合があります。建物かどうかはOpenStreetMapの建物データで判定しています。</p>
+        <p><b>注意</b>：測量時点（地域により2016〜2024年頃）以降に建った・取り壊された建物や、切られた・育った木は反映されません。灰色の斜線は測量データがない場所で、影を表示していません。対象エリアはWestfield Albanyから半径10km（点線の円）です。</p>
+        <p class="muted">標高データ: LINZ NZ Elevation（CC BY 4.0）／地図: OpenFreeMap, © OpenMapTiles, © OpenStreetMap contributors／駐車場: OpenStreetMap（Overpass API）</p>
+      </div>
+    </section>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
