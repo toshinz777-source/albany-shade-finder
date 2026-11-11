@@ -1,0 +1,102 @@
+== GET range dsm
+HTTP/1.1 206 Partial Content
+x-amz-id-2: tunQ6wVVoLB1kzGdQuBVMUQX7pDpymUIU2KII68PUfIUL5ZDSxzqcGkVBodmf93SGR2hmf8BRq8=
+x-amz-request-id: PATT7CS4P8C88AW5
+Server: AmazonS3
+Date: Wed, 11 Nov 2026 05:00:12 GMT
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, HEAD
+Access-Control-Expose-Headers: ETag, x-amz-meta-custom-header
+Access-Control-Max-Age: 3000
+Vary: Origin, Access-Control-Request-Headers, Access-Control-Request-Method
+Last-Modified: Wed, 16 Apr 2025 23:09:33 GMT
+ETag: "69755b8fff2abb8c72c7b95eda27c789-121"
+x-amz-storage-class: INTELLIGENT_TIERING
+x-amz-server-side-encryption: AES256
+x-amz-meta-multihash: 122055d45ebf15ac9e13cda33dd945c3dede27160b8e48a1c78ae957ae2fbf519a27
+x-amz-version-id: J3PX3g6ygSBCI3eqT.LR3UNlyBtNYKcw
+Accept-Ranges: bytes
+Content-Range: bytes 0-100/1485864859
+Content-Type: image/tiff; application=geotiff; profile=cloud-optimized
+Content-Length: 101
+
+== OPTIONS dsm
+HTTP/1.1 200 OK
+x-amz-id-2: Vkcbu1K4aCej1UWam9tVbcUs52EutY4S6e61K7D+21PiOYQOGVzEj8jCdbEMQi58oGm+Mvpv95q8uDzTKKDr1yPTcrMU3rAF
+x-amz-request-id: M4YVP9NDG7C7VG9S
+Server: AmazonS3
+Date: Wed, 11 Nov 2026 05:00:13 GMT
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, HEAD
+Access-Control-Allow-Headers: range
+Access-Control-Expose-Headers: ETag, x-amz-meta-custom-header
+Access-Control-Max-Age: 3000
+Vary: Origin, Access-Control-Request-Headers, Access-Control-Request-Method
+Content-Length: 0
+
+== GET range dem
+HTTP/1.1 206 Partial Content
+x-amz-id-2: 90rlOIH9H/RbcoakSJSpS5k+hh/1nmXHeCnF6hE66+KN5nAgBpe/FD29cjYeWWRbjvfJo/yPl5dG64Go/YFmE78M/7npXfMS
+x-amz-request-id: N5BWFF20MG13KFTY
+Server: AmazonS3
+Date: Wed, 11 Nov 2026 05:00:14 GMT
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, HEAD
+Access-Control-Expose-Headers: ETag, x-amz-meta-custom-header
+Access-Control-Max-Age: 3000
+Vary: Origin, Access-Control-Request-Headers, Access-Control-Request-Method
+Last-Modified: Mon, 19 Jan 2026 19:58:58 GMT
+ETag: "4080e605703a327a42ad6d797465a072-103"
+x-amz-storage-class: INTELLIGENT_TIERING
+x-amz-server-side-encryption: AES256
+x-amz-meta-multihash: 1220c1a264b8d6eb7f693263776eb7fa05dc1418884e682a57149bf556b4cfd83fa8
+x-amz-version-id: CtPsGtYqBRctXmmLTh43IR3DLGY0foA2
+Accept-Ranges: bytes
+Content-Range: bytes 0-100/1264584965
+Content-Type: image/tiff; application=geotiff; profile=cloud-optimized
+Content-Length: 101
+
+== catalog
+HTTP/1.1 200 OK
+x-amz-id-2: b+cGqiCLaOso7hrD/+6TFI2MNuOURTtQAr5IaNVRpSPBQnFqccql2uyCC0TbuoDYyMRK7mDUBP2iLfLF+xwfm0xfDqM732pV
+x-amz-request-id: N5BRX3EMAF4ZEHP3
+Server: AmazonS3
+Date: Wed, 11 Nov 2026 05:00:14 GMT
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, HEAD
+Access-Control-Expose-Headers: ETag, x-amz-meta-custom-header
+Access-Control-Max-Age: 3000
+Vary: Origin, Access-Control-Request-Headers, Access-Control-Request-Method
+Last-Modified: Fri, 18 Sep 2026 00:00:42 GMT
+ETag: "cc639a5855402f67c75144347b411471"
+x-amz-server-side-encryption: AES256
+x-amz-meta-multihash: 1220ad9b0d5f7d97fe79c19cc3f1bca1dd047062c8409e95ab821e1846d3ff681db2
+x-amz-version-id: BH9Vyy47AnixsM6AisJnL4yekO2xOuTS
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 66450
+
+== s3-dash style
+HTTP/1.1 206 Partial Content
+x-amz-id-2: UIf4iI4G+vGofk7LKHGQlo0lyYn61FU20YXqLLMwgZ266eTG4rH9rSHN3TLYouPu5PnY5uK9AwnJNUcqeAHYYO0GzYYotZ2Z
+x-amz-request-id: DDADQDB0QPF3QRW1
+Server: AmazonS3
+Date: Wed, 11 Nov 2026 05:00:15 GMT
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, HEAD
+Access-Control-Expose-Headers: ETag, x-amz-meta-custom-header
+Access-Control-Max-Age: 3000
+Vary: Origin, Access-Control-Request-Headers, Access-Control-Request-Method
+Last-Modified: Wed, 16 Apr 2025 23:09:33 GMT
+ETag: "69755b8fff2abb8c72c7b95eda27c789-121"
+x-amz-storage-class: INTELLIGENT_TIERING
+x-amz-server-side-encryption: AES256
+x-amz-meta-multihash: 122055d45ebf15ac9e13cda33dd945c3dede27160b8e48a1c78ae957ae2fbf519a27
+x-amz-version-id: J3PX3g6ygSBCI3eqT.LR3UNlyBtNYKcw
+Accept-Ranges: bytes
+Content-Range: bytes 0-100/1485864859
+Content-Type: image/tiff; application=geotiff; profile=cloud-optimized
+Content-Length: 101
+
+== item
+{"type": "Feature", "stac_version": "1.0.0", "id": "BA31", "links": [{"href": "./BA31.json", "rel": "self", "type": "application/geo+json"}, {"href": "s3://nz-elevation/auckland/auckland-south_2016-2017/dsm_1m/2193/BA31_10000_0505.json", "rel": "derived_from", "type": "application/geo+json", "file:checksum": "12209991ceb6af386c50202e8e90a002a289b795d282c2659ccdcc5d2e2053ecffc5"}, {"href": "s3://nz-elevation/auckland/auckland-south_2016-2017/dsm_1m/2193/BA31_10000_0504.json", "rel": "derived_from", "type": "application/geo+json", "file:checksum": "12206adf0d4e24679658439c43f99ab4e198eb81893b41df6ed04799dd316d552625"}, {"href": "s3://nz-elevation/auckland/auckland-north_2016-2018/dsm_1m/2193/BA31_10000_0505.json", "rel": "derived_from", "type": "application/geo+json", "file:checksum": "1220bd444d4024e0f641e7d15444fb348d3e86e7446fd8bc2a639d30fbd218e16674"}, {"href": "s3://nz-elevation/auckland/auckland-north_2016-2018/dsm_1m/2193/BA31_10000_0504.json", "rel": "derived_from", "type": "application/geo+json", "file:checksum": "1220a4aa0fa8b050e8d571fb287d51e6aeafd0d53f62f3fe5fdd0bfd7a1fe458574b"}, {"href": "s3://nz-elevation/auckland/auckland-north_2016-2018/dsm_1m/2193/BA31_10000_0503.json", "rel": "derived_from", "type": "application/geo+json", "file:checksum": "12204a8fffb3bdefa7e39ee0c9afaf8bfec2ce1e25c1d20afe0e476afe9e93d51e62"}, {"href": "s3://nz-elevation/auckland/auckland-north_2016-2018/dsm_1m/2193/BA31_10000_0502.json", "rel": "derived_from", "type": "application/geo+json
